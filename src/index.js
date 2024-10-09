@@ -1,9 +1,6 @@
-import { dirname } from 'path';
 import { fileURLToPath } from 'node:url';
 import readline from 'node:readline/promises';
-import { EOL } from 'node:os';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import { EOL, homedir } from 'node:os';
 
 const getNameOfUser = () => {
   const passedArgs = process.argv.slice(2);
@@ -25,7 +22,8 @@ const runFileManager = async () => {
     input: process.stdin,
     output: process.stdout,
   });
-  rl.setPrompt(`You are currently in ${__dirname}${EOL}`);
+  rl.setPrompt(`You are currently in ${homedir}${EOL}`);
+  rl.prompt();
   rl.on('line', (data) => {
     if (data.toString() === '.exit') {
       rl.close();
