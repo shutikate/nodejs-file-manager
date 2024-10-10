@@ -1,15 +1,16 @@
-import { checkFolderContent } from "./ls.js";
-import { changeUp } from "./changePath.js";
+import { checkFolderContent } from "./checkFolderContent.js";
+import { changeUp, changeDirectory } from "./changePath.js";
 
 const operations = {
   ls: checkFolderContent,
-  up: changeUp
+  up: changeUp,
+  cd: changeDirectory
 }
 
-export const startOperation = async (input, path) => {
-  if (operations[input]) {
-    const operation = operations[input];
-    operation(path);
+export const startOperation = (command, args) => {
+  if (operations[command]) {
+    const operation = operations[command];
+    operation(args);
   } else {
     console.error ('Invalid input');
   }

@@ -1,9 +1,9 @@
 import { readdir } from 'node:fs/promises';
 
-export const checkFolderContent = async (dirnamePath) => {
+export const checkFolderContent = async () => {
 
   try {
-    const content = await readdir(dirnamePath, {withFileTypes: true});
+    const content = await readdir(process.cwd(), {withFileTypes: true});
     const folderContent = content.map((elem) => (
       { Name: elem.name,
         Type: elem.isDirectory() ? 'directory' : elem.isFile ? 'file' : 'symbolic link'
@@ -17,7 +17,7 @@ export const checkFolderContent = async (dirnamePath) => {
     console.table([...directories, ...files, ...symbolicLinks]);
   }
   catch (error) {
-    throw error;
+    console.error(`Operation failed! ${error.message}`);
   }
 
 }

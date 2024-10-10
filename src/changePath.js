@@ -1,16 +1,28 @@
-import { dirname, parse } from 'node:path';
+import { dirname, parse, resolve } from 'node:path';
 
-export const changeUp = (path) => {
-  const parentDirname = dirname(path);
-  const root = parse(path).root;
+export const changeUp = async () => {
+  try {
+    const path = process.cwd();
+    const parentDirname = dirname(path);
+    const root = parse(path).root;
 
-  if (parentDirname === root) {
-    process.chdir(root);
-  } else {
-    process.chdir(parentDirname);
+    parentDirname === root ? process.chdir(root) : process.chdir(parentDirname);
+  }
+  catch (error) {
+    console.error(`Operation failed! ${error.message}`);
   }
 }
 
-export const changeDirectory = (path) => {
-
+export const changeDirectory = async (args) => {
+  try {
+    if (args.length !== 1) {
+      console.error('Invalid input');
+    } else {
+      const path = resolve(process.cwd(), ...args);
+      process.chdir(path);
+    }
+  }
+  catch (error) {
+    console.error(`Operation failed! ${error.message}`);
+  }
 }

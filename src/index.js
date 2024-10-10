@@ -17,10 +17,14 @@ const runFileManager = async () => {
   const rl = readline.createInterface(process.stdin, process.stdout);
 
   rl.on('line', (data) => {
-    if (data.toString() === '.exit') {
+    if (data === '.exit') {
       rl.close();
     } else {
-      startOperation(data.toString(), process.cwd());
+      const input = data.split(' ');
+      const command = input[0];
+      const args = input.slice(1);
+
+      startOperation(command, args);
       // rl.setPrompt(`You are currently in ${process.cwd()}${EOL}`);
       // rl.prompt();
       process.stdout.write(`You are currently in ${process.cwd()}${EOL}`);
