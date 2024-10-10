@@ -1,12 +1,13 @@
 import { checkFolderContent } from "./ls.js";
+import { changeUp } from "./changePath.js";
 
 const operations = {
-  ls: checkFolderContent
+  ls: checkFolderContent,
+  up: changeUp
 }
 
-export const startOperation = (input, path) => {
-  const commands = Object.keys(operations);
-  if (commands.includes(input)) {
+export const startOperation = async (input, path) => {
+  if (operations[input]) {
     const operation = operations[input];
     operation(path);
   } else {
