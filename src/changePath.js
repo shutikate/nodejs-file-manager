@@ -1,4 +1,4 @@
-import { dirname, parse, resolve } from 'node:path';
+import { dirname, parse, resolve, join } from 'node:path';
 
 export const changeUp = async () => {
   try {
@@ -18,8 +18,8 @@ export const changeDirectory = async (args) => {
     if (args.length !== 1) {
       console.error('Invalid input');
     } else {
-      const path = resolve(process.cwd(), ...args);
-      process.chdir(path);
+      const pathToDirectory = resolve(process.cwd(), ...args);
+      process.chdir(pathToDirectory);
     }
   }
   catch (error) {

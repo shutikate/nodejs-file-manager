@@ -20,7 +20,7 @@ const runFileManager = async () => {
     if (data === '.exit') {
       rl.close();
     } else {
-      const input = data.split(' ');
+      const input = data ? data.match(/(?:[^\s"]+|"[^"]*")+/g) : [];
       const command = input[0];
       const args = input.slice(1);
 

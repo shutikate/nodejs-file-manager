@@ -1,10 +1,12 @@
-import { checkFolderContent } from "./checkFolderContent.js";
-import { changeUp, changeDirectory } from "./changePath.js";
+import { checkFolderContent } from './checkFolderContent.js';
+import { changeUp, changeDirectory } from './changePath.js';
+import { readFile } from './fs/readFile.js';
 
 const operations = {
   ls: checkFolderContent,
   up: changeUp,
-  cd: changeDirectory
+  cd: changeDirectory,
+  cat: readFile
 }
 
 export const startOperation = (command, args) => {
