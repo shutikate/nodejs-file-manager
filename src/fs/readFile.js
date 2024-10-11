@@ -1,5 +1,4 @@
 import { resolve } from 'node:path';
-import { EOL } from 'node:os';
 import { createReadStream } from 'node:fs';
 
 export const readFile = async (args) => {
@@ -13,7 +12,6 @@ export const readFile = async (args) => {
           console.error(`Operation failed! ${error.message}`);
         });
         stream.pipe(process.stdout);
-        stream.on('end', () => process.stdout.write(EOL));
     }
   }
   catch (error) {
