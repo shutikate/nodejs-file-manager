@@ -5,6 +5,7 @@ import { createFile } from './fs/createFile.js';
 import { renameFile } from './fs/renameFile.js';
 import { deleteFile } from './fs/deleteFile.js';
 import { copyFile } from './fs/copyFile.js';
+import { moveFile } from './fs/moveFile.js';
 
 const operations = {
   ls: checkFolderContent,
@@ -14,7 +15,8 @@ const operations = {
   add: createFile,
   rn: renameFile,
   rm: deleteFile,
-  cp: copyFile
+  cp: copyFile,
+  mv: moveFile
 }
 
 export const startOperation = (command, args) => {
