@@ -12,7 +12,7 @@ export const createFile = async (args) => {
     }
   }
   catch (error) {
-    console.error(error.message)
+    console.error(`Operation failed! ${error.message}`);
   }
   finally {
     if (file) {
