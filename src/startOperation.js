@@ -7,7 +7,9 @@ import { deleteFile } from './fs/deleteFile.js';
 import { copyFile } from './fs/copyFile.js';
 import { moveFile } from './fs/moveFile.js';
 import { printOSInformation } from './os/os.js';
-import { calculateHash } from './hash/hash.js';
+import { calculateHash } from './crypto/hash.js';
+import { compressFile } from './crypto/compress.js';
+import { decompressFile } from './crypto/decompress.js';
 
 const operations = {
   ls: checkFolderContent,
@@ -20,7 +22,9 @@ const operations = {
   cp: copyFile,
   mv: moveFile,
   os: printOSInformation,
-  hash: calculateHash
+  hash: calculateHash,
+  compress: compressFile,
+  decompress: decompressFile
 }
 
 export const startOperation = (command, args) => {
