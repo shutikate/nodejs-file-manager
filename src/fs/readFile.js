@@ -7,11 +7,11 @@ export const readFile = async (args) => {
       console.error('Invalid input');
     } else {
         const pathToFile = resolve(process.cwd(), args.join(' '));
-        const stream = createReadStream(pathToFile, { encoding: 'utf-8' });
-        stream.on('error', (error) => {
+        const readStream = createReadStream(pathToFile, { encoding: 'utf-8' });
+        readStream.on('error', (error) => {
           console.error(`Operation failed! ${error.message}`);
         });
-        stream.pipe(process.stdout);
+        readStream.pipe(process.stdout);
     }
   }
   catch (error) {
