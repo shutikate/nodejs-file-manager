@@ -1,4 +1,4 @@
-import { resolve } from 'node:path';
+import { resolve, basename } from 'node:path';
 import { createReadStream, createWriteStream } from 'node:fs';
 import { access, unlink } from 'node:fs/promises';
 import { handleError, inputError } from '../getMessages.js';
@@ -12,7 +12,7 @@ export const moveFile = async (args) => {
     }
 
     const pathToMoveFile = resolve(process.cwd(), args[0]);
-    const nameOfMoveFile = pathToMoveFile.split('\\').pop();
+    const nameOfMoveFile = basename(pathToMoveFile);
     const pathToNewDirectory = resolve(process.cwd(), args[1], nameOfMoveFile);
 
     await access(pathToMoveFile);

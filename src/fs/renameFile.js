@@ -12,7 +12,6 @@ export const renameFile = async (args) => {
 
     const pathToFile = resolve(process.cwd(), args[0]);
     const directoryPath = dirname(pathToFile);
-    console.log(directoryPath);
     const newName = resolve(directoryPath, args[1]);
     await rename(pathToFile, newName);
   }
