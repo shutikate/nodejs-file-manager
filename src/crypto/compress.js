@@ -18,18 +18,21 @@ export const compressFile = async (args) => {
     await access(pathToFile);
 
     const readStream = createReadStream(pathToFile);
-
-    readStream.on('error', (error) => {
-      handleError(error);
-    });
-
     const writeStream = createWriteStream(destinationPath, { flags: 'wx' });
 
-    writeStream.on('error', (error) => {
-      handleError(error);
-    });
+    return new Promise((resolve, reject) => {
+      readStream.on('error', (error) => {
+        reject(error);
+      });
 
-    readStream.pipe(createBrotliCompress()).pipe(writeStream);
+      writeStream.on('error', (error) => {
+        reject(error);
+      });
+
+      readStream.pipe(createBrotliCompress()).pipe(writeStream);
+
+      writeStream.on('close', () => resolve());
+    });
   }
   catch (error) {
     handleError(error);

@@ -13,9 +13,9 @@ export const readFile = async (args) => {
     const pathToFile = resolve(process.cwd(), ...args);
     const readStream = createReadStream(pathToFile, { encoding: 'utf-8' });
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       readStream.on('error', (error) => {
-        handleError(error);
+        reject(error);
       });
 
       readStream.pipe(process.stdout);

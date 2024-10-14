@@ -13,7 +13,7 @@ export const getPathMessage = () => {
 }
 
 export const handleError = (error) => {
-  console.error (`Operation failed! ${error.message}`);
+  console.error (`Operation failed! ${error.message}${EOL}`);
 }
 
-export const inputError = 'Invalid input';
+export const inputError = `Invalid input${EOL}`;

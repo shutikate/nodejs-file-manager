@@ -18,19 +18,21 @@ export const copyFile = async (args) => {
     await access(pathToCopyFile);
 
     const readStream = createReadStream(pathToCopyFile);
-
-    readStream.on('error', (error) => {
-      handleError(error);
-    });
-
     const writeStream = createWriteStream(pathToNewDirectory, { flags: 'wx' });
 
-    writeStream.on('error', (error) => {
-      handleError(error);
+    return new Promise((resolve, reject) => {
+      readStream.on('error', (error) => {
+        reject(error);
+      });
+
+      readStream.pipe(writeStream);
+
+      writeStream.on('error', (error) => {
+        reject(error);
+      });
+
+      writeStream.on('close', () => resolve());
     });
-
-    readStream.pipe(writeStream);
-
   }
   catch (error) {
     handleError(error);

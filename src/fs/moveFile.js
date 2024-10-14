@@ -18,21 +18,24 @@ export const moveFile = async (args) => {
     await access(pathToMoveFile);
 
     const readStream = createReadStream(pathToMoveFile);
-
-    readStream.on('error', (error) => {
-      handleError(error);
-    });
-
     const writeStream = createWriteStream(pathToNewDirectory, { flags: 'wx' });
 
-    writeStream.on('error', (error) => {
-      handleError(error);
-    });
+    return new Promise((resolve, reject) => {
+      readStream.on('error', (error) => {
+        reject(error);
+      });
 
-    readStream.pipe(writeStream);
+      readStream.pipe(writeStream);
 
-    writeStream.on('finish', () => {
-      unlink(pathToMoveFile);
+      writeStream.on('error', (error) => {
+        reject(error);
+      });
+
+      writeStream.on('finish', () => {
+        unlink(pathToMoveFile);
+      });
+
+      writeStream.on('close', () => resolve());
     });
   }
   catch (error) {
