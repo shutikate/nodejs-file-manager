@@ -9,11 +9,11 @@ export const getCloseMessage = (user) => {
 }
 
 export const getPathMessage = () => {
-  return `You are currently in ${process.cwd()}${EOL}`;
+  return `${EOL}You are currently in ${process.cwd()}${EOL}`;
 }
 
 export const handleError = (error) => {
-  console.error (`Operation failed! ${error.message}${EOL}`);
+  console.error (`Operation failed! ${error.message}`);
 }
 
-export const inputError = `Invalid input${EOL}`;
+export const inputError = `Invalid input`;
