@@ -1,6 +1,7 @@
-import { dirname, parse, resolve, join } from 'node:path';
+import { dirname, parse, resolve } from 'node:path';
+import { handleError, inputError } from './getMessages.js';
 
-export const changeUp = async () => {
+export const changeUp = () => {
   try {
     const path = process.cwd();
     const parentDirname = dirname(path);
@@ -9,20 +10,20 @@ export const changeUp = async () => {
     parentDirname === root ? process.chdir(root) : process.chdir(parentDirname);
   }
   catch (error) {
-    console.error(`Operation failed! ${error.message}`);
+    handleError(error);
   }
 }
 
-export const changeDirectory = async (args) => {
+export const changeDirectory = (args) => {
   try {
     if (args.length !== 1) {
-      console.error('Invalid input');
+      console.error(inputError);
     } else {
       const pathToDirectory = resolve(process.cwd(), ...args);
       process.chdir(pathToDirectory);
     }
   }
   catch (error) {
-    console.error(`Operation failed! ${error.message}`);
+    handleError(error);
   }
 }

@@ -1,4 +1,5 @@
 import { readdir } from 'node:fs/promises';
+import { handleError } from './getMessages.js';
 
 export const checkFolderContent = async () => {
 
@@ -17,7 +18,6 @@ export const checkFolderContent = async () => {
     console.table([...directories, ...files, ...symbolicLinks]);
   }
   catch (error) {
-    console.error(`Operation failed! ${error.message}`);
+    handleError(error);
   }
-
 }

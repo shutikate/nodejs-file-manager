@@ -4,5 +4,8 @@ export const getNameOfUser = () => {
   if (usernameArg) {
     const name = usernameArg.split('=')[1];
     return name;
+  }
+  else {
+    return 'Reviewer';
   };
 }

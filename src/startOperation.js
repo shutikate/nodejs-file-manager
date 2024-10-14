@@ -10,6 +10,7 @@ import { printOSInformation } from './os/os.js';
 import { calculateHash } from './crypto/hash.js';
 import { compressFile } from './crypto/compress.js';
 import { decompressFile } from './crypto/decompress.js';
+import { inputError } from './getMessages.js';
 
 const operations = {
   ls: checkFolderContent,
@@ -27,11 +28,11 @@ const operations = {
   decompress: decompressFile
 }
 
-export const startOperation = (command, args) => {
+export const startOperation = async (command, args) => {
   if (operations[command]) {
     const operation = operations[command];
-    operation(args);
+    await operation(args);
   } else {
-    console.error ('Invalid input');
+    console.error(inputError);
   }
 }

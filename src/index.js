@@ -1,22 +1,23 @@
 import readline from 'node:readline/promises';
-import { EOL, homedir } from 'node:os';
+import { homedir } from 'node:os';
 import { getNameOfUser } from './utils.js';
 import { startOperation } from './startOperation.js';
+import { getOpenMessage, getCloseMessage, getPathMessage } from './getMessages.js';
 
 process.chdir(homedir());
 
 const runFileManager = async () => {
 
   const username = getNameOfUser();
-  const greetingMessage = `Welcome to the File Manager, ${username}!${EOL}`;
-  const closeMessage = `Thank you for using File Manager, ${username}, goodbye!${EOL}`;
+  const openMessage = getOpenMessage(username);
+  const closeMessage = getCloseMessage(username);
 
-  process.stdout.write(`${greetingMessage}`);
-  process.stdout.write(`You are currently in ${process.cwd()}${EOL}`);
+  process.stdout.write(openMessage);
+  process.stdout.write(getPathMessage());
 
   const rl = readline.createInterface(process.stdin, process.stdout);
 
-  rl.on('line', (data) => {
+  rl.on('line', async (data) => {
     if (data === '.exit') {
       rl.close();
     } else {
@@ -26,14 +27,12 @@ const runFileManager = async () => {
       const command = input[0];
       const args = input.slice(1);
 
-      startOperation(command, args);
-      // rl.setPrompt(`You are currently in ${process.cwd()}${EOL}`);
-      // rl.prompt();
-      process.stdout.write(`You are currently in ${process.cwd()}${EOL}`);
+      await startOperation(command, args);
+      process.stdout.write(getPathMessage());
     }
   });
 
-  rl.on('close', () => process.stdout.write(`${closeMessage}${EOL}`));
+  rl.on('close', () => process.stdout.write(closeMessage));
 
 }
 
