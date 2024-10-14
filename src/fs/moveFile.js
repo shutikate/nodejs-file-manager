@@ -1,6 +1,6 @@
 import { resolve } from 'node:path';
 import { createReadStream, createWriteStream } from 'node:fs';
-import { unlink } from 'node:fs/promises';
+import { access, unlink } from 'node:fs/promises';
 import { handleError, inputError } from '../getMessages.js';
 
 export const moveFile = async (args) => {
@@ -15,15 +15,17 @@ export const moveFile = async (args) => {
     const nameOfMoveFile = pathToMoveFile.split('\\').pop();
     const pathToNewDirectory = resolve(process.cwd(), args[1], nameOfMoveFile);
 
-    const writeStream = createWriteStream(pathToNewDirectory, { flags: 'wx' });
-
-    writeStream.on('error', (error) => {
-      handleError(error);
-    });
+    await access(pathToMoveFile);
 
     const readStream = createReadStream(pathToMoveFile);
 
     readStream.on('error', (error) => {
+      handleError(error);
+    });
+
+    const writeStream = createWriteStream(pathToNewDirectory, { flags: 'wx' });
+
+    writeStream.on('error', (error) => {
       handleError(error);
     });
 

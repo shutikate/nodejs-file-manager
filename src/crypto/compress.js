@@ -1,5 +1,6 @@
 import { resolve } from 'node:path';
 import { createReadStream, createWriteStream } from 'node:fs';
+import { access } from 'node:fs/promises';
 import { createBrotliCompress } from 'node:zlib';
 import { handleError, inputError } from '../getMessages.js';
 
@@ -13,6 +14,8 @@ export const compressFile = async (args) => {
 
     const pathToFile = resolve(process.cwd(), args[0]);
     const destinationPath = resolve(process.cwd(), args[1]);
+
+    await access(pathToFile);
 
     const readStream = createReadStream(pathToFile);
 

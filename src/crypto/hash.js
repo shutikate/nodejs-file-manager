@@ -19,7 +19,7 @@ export const calculateHash = async (args) => {
     return new Promise((resolve, reject) => {
 
       readStream.on('error', (error) => {
-        handleError(error);
+        reject(error);
       })
 
       readStream.pipe(hash).setEncoding('hex').pipe(process.stdout);
