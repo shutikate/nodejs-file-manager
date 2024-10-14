@@ -1,9 +1,14 @@
 import { readdir } from 'node:fs/promises';
-import { handleError } from './getMessages.js';
+import { handleError, inputError } from './getMessages.js';
 
-export const checkFolderContent = async () => {
+export const checkFolderContent = async (args) => {
 
   try {
+    if (args.length !== 0) {
+      console.error(inputError);
+      return;
+    }
+
     const content = await readdir(process.cwd(), {withFileTypes: true});
     const folderContent = content.map((elem) => (
       { Name: elem.name,

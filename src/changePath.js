@@ -1,8 +1,13 @@
 import { dirname, parse, resolve } from 'node:path';
 import { handleError, inputError } from './getMessages.js';
 
-export const changeUp = () => {
+export const changeUp = (args) => {
   try {
+    if (args.length !== 0) {
+      console.error(inputError);
+      return;
+    }
+
     const path = process.cwd();
     const parentDirname = dirname(path);
     const root = parse(path).root;

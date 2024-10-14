@@ -1,4 +1,4 @@
-import { resolve } from 'node:path';
+import { resolve, dirname } from 'node:path';
 import { rename } from 'node:fs/promises';
 import { handleError, inputError } from '../getMessages.js';
 
@@ -11,7 +11,9 @@ export const renameFile = async (args) => {
     }
 
     const pathToFile = resolve(process.cwd(), args[0]);
-    const newName = args[1];
+    const directoryPath = dirname(pathToFile);
+    console.log(directoryPath);
+    const newName = resolve(directoryPath, args[1]);
     await rename(pathToFile, newName);
   }
   catch (error) {
